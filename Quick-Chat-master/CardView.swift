@@ -68,9 +68,9 @@ class CardView: UIView {
             
             Database.database().reference().child("users").child(userownID).child("credentials").updateChildValues(values, withCompletionBlock: { (errr, _) in
                 if errr == nil {
-                    if let data = snapshot.value as? [String: String] {
-                        print()
-                    }
+                    //if let data = snapshot.value as? [String: String] {
+                      //  print()
+                    //}
                 }
             })
  
