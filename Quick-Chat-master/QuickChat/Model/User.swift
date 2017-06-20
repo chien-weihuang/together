@@ -43,7 +43,7 @@ class User: NSObject {
                 storageRef.putData(imageData!, metadata: nil, completion: { (metadata, err) in
                     if err == nil {
                         let path = metadata?.downloadURL()?.absoluteString
-                        let values = ["name": withName, "email": email, "profilePicLink": path!,"hobby":"","preference":"","clubs":"","secret":""]
+                        let values = ["name": withName, "email": email, "profilePicLink": path!,"hobby":"","preference":"","clubs":"","secret":"","match":""]
                         Database.database().reference().child("users").child((user?.uid)!).child("credentials").updateChildValues(values, withCompletionBlock: { (errr, _) in
                             if errr == nil {
                                 let userInfo = ["email" : email, "password" : password]
@@ -103,16 +103,16 @@ class User: NSObject {
         Database.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
             let id = snapshot.key
             let data = snapshot.value as! [String: Any]
-            let credentials = data["credentials"] as! [String: String]
+            let credentials = data["credentials"] as? [String: String]
             if id != exceptID {
-                let name = credentials["name"]!
-                let email = credentials["email"]!
-                let link = URL.init(string: credentials["profilePicLink"]!)
+                let name = credentials?["name"]!
+                let email = credentials?["email"]!
+                let link = URL.init(string: (credentials?["profilePicLink"])!)
                 
                 URLSession.shared.dataTask(with: link!, completionHandler: { (data, response, error) in
                     if error == nil {
                         let profilePic = UIImage.init(data: data!)
-                        let user = User.init(name: name, email: email, id: id, profilePic: profilePic!)
+                        let user = User.init(name: name!, email: email!, id: id, profilePic: profilePic!)
                         completion(user)
                     }
                 }).resume()

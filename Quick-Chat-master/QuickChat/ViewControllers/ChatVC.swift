@@ -86,7 +86,7 @@ class ChatVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
                         DispatchQueue.main.async {
                             //get other user name and picture
                             self.passName = user.name
-                            print(self.passName)
+                            //print(self.passName)
                             self.passProfileImage  = user.profilePic
                             //print(self.passProfileImage)
                             Database.database().reference().child("users").child(self.currentUser!.id).child("credentials").observeSingleEvent(of: .value, with: { (snapshot) in

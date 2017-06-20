@@ -8,6 +8,7 @@
 
 
 import UIKit
+import Firebase
 
 public enum CardOption: String {
     case like1 = "喜歡!"
@@ -23,6 +24,10 @@ class CardView: UIView {
     
     var greenLabel: CardViewLabel!
     var redLabel: CardViewLabel!
+    var currentIDCardview = ""
+    var userownID = ""
+    
+    var matches = [String]()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -57,7 +62,18 @@ class CardView: UIView {
         if option == .like1 || option == .like2 || option == .like3 {
             
             greenLabel.text = option.rawValue
+            print(currentIDCardview)
+            matches.append(currentIDCardview)
+            let values = ["match":matches]
             
+            Database.database().reference().child("users").child(userownID).child("credentials").updateChildValues(values, withCompletionBlock: { (errr, _) in
+                if errr == nil {
+                    if let data = snapshot.value as? [String: String] {
+                        print()
+                    }
+                }
+            })
+ 
             // fade out redLabel
             if !redLabel.isHidden {
                 UIView.animate(withDuration: 0.15, animations: {

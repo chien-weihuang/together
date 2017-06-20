@@ -15,6 +15,7 @@ class imageCard: CardView{
     class func getID(dataID : String){
         currentUserID = dataID
     }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         //image
@@ -42,14 +43,16 @@ class imageCard: CardView{
 
        
         
-        if let id = Auth.auth().currentUser?.uid {
-            User.downloadAllUsers(exceptID: imageCard.currentUserID, completion: {(user) in
+        
+        User.downloadAllUsers(exceptID: imageCard.currentUserID, completion: {(user) in
                 DispatchQueue.main.async {
                     imageView.image = user.profilePic
                     nameLabel.text = user.name
+                    self.currentIDCardview = user.id
+                    self.userownID = imageCard.currentUserID
                 }
             })
-        }
+        
 
         
         
