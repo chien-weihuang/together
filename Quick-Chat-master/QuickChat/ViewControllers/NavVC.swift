@@ -44,6 +44,9 @@ class NavVC: UINavigationController, UICollectionViewDelegate, UICollectionViewD
     var items = [User]()
     
        
+    @IBAction func bouttonup(_ sender: UIButton) {
+         self.dismissExtraViews()
+    }
     //MARK: Methods
     func customization() {
         //DarkView customization
@@ -136,6 +139,7 @@ class NavVC: UINavigationController, UICollectionViewDelegate, UICollectionViewD
     
     //Show extra view
     func showExtraViews(notification: NSNotification)  {
+    // self.dismissExtraViews()
         let transform = CGAffineTransform.init(scaleX: 0.94, y: 0.94)
         self.topAnchorContraint.constant = 0
         self.darkView.isHidden = false
